@@ -2,6 +2,7 @@ const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const Dotenv = require('dotenv-webpack');
+const webpack = require('webpack');
 const CopyPlugin = require('copy-webpack-plugin');
 
 module.exports = {
@@ -58,6 +59,13 @@ module.exports = {
       safe: true,
       systemvars: true,
       defaults: false,
+    }),
+    new webpack.DefinePlugin({
+      'process.env': {
+        CLIENT_ID_PP: JSON.stringify(process.env.CLIENT_ID_PP),
+        MAP_API_KEY: JSON.stringify(process.env.MAP_API_KEY),
+        FIREBASE_TOKEN: JSON.stringify(process.env.FIREBASE_TOKEN),
+      },
     }),
     new CopyPlugin({
       patterns: [
