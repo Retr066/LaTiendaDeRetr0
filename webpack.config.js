@@ -2,7 +2,7 @@ const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const Dotenv = require('dotenv-webpack');
-const webpack = require('webpack');
+const CopyPlugin = require('copy-webpack-plugin');
 
 module.exports = {
   mode: 'production',
@@ -59,11 +59,12 @@ module.exports = {
       systemvars: true,
       defaults: false,
     }),
-    new webpack.DefinePlugin({
-      'process.env': {
-        CLIENT_ID_PP: JSON.stringify(process.env.CLIENT_ID_PP),
-        MAP_API_KEY: JSON.stringify(process.env.MAP_API_KEY),
-      },
+    new CopyPlugin({
+      patterns: [
+        { from: 'public/manifest.json', to: '' },
+        { from: 'public/service-worker.js', to: '' },
+        { from: 'public/icon.png', to: 'assets' },
+      ],
     }),
   ],
   devServer: {
